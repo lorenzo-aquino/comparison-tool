@@ -1,5 +1,6 @@
 import "./App.css";
 import Item from "./components/Item";
+import Result from "./components/Result";
 import { React, useState } from "react";
 
 const App = () => {
@@ -35,7 +36,11 @@ const App = () => {
     secondResult["price"] = secondItem.price / secondItem.amount;
     secondResult["unit"] = secondItem.unit;
   };
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState({
+    costEffective: "",
+    better: {},
+    worse: {},
+  });
 
   const handleChange = (event) => {
     let inputId = event.target.id;
@@ -59,18 +64,19 @@ const App = () => {
   };
 
   const computeResult = () => {
-    let resultString =
+    let computedResult =
       firstResult.price < secondResult.price
-        ? `
-    ${firstResult.name} is more cost-effective.
-    ${firstResult.name} costs ${firstResult.price}/${firstResult.unit}
-    ${secondResult.name} costs ${secondResult.price}/${secondResult.unit}`
-        : `
-    ${secondResult.name} is more cost-effective.
-    ${secondResult.name} costs ${secondResult.price}/${secondResult.unit}
-    ${firstResult.name} costs ${firstResult.price}/${firstResult.unit}`;
-    setResult(resultString);
-    console.log("result", result);
+        ? {
+            costEffective: firstResult.name,
+            better: firstResult,
+            worse: secondResult,
+          }
+        : {
+            costEffective: secondResult.name,
+            better: secondResult,
+            worse: firstResult,
+          };
+    setResult(computedResult);
   };
 
   return (
@@ -83,10 +89,7 @@ const App = () => {
           Compute
         </button>
       </div>
-      <div>
-        <h2>Result</h2>
-        <p>{result}</p>
-      </div>
+      <Result result={result} />
     </>
   );
 };
