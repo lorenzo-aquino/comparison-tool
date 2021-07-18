@@ -1,7 +1,8 @@
 import "./App.css";
+import Item from "./components/Item";
 import { React, useState } from "react";
 
-function App() {
+const App = () => {
   const [firstItem, setFirstItem] = useState({
     name: "",
     price: 0,
@@ -14,53 +15,61 @@ function App() {
     amount: 0,
     unit: "",
   });
-  const [firstResult, setFirstResult] = useState({
+  const firstResult = {
     name: "",
     price: 0,
     unit: "",
-  });
-  const [secondResult, setSecondResult] = useState({
+  };
+  const secondResult = {
     name: "",
     price: 0,
     unit: "",
-  });
+  };
+  const setFirstResult = () => {
+    firstResult["name"] = firstItem.name;
+    firstResult["price"] = firstItem.price / firstItem.amount;
+    firstResult["unit"] = firstItem.unit;
+  };
+  const setSecondResult = () => {
+    secondResult["name"] = secondItem.name;
+    secondResult["price"] = secondItem.price / secondItem.amount;
+    secondResult["unit"] = secondItem.unit;
+  };
   const [result, setResult] = useState("");
 
+  const handleChange = (event) => {
+    let inputId = event.target.id;
+    if (inputId.startsWith("first")) {
+      let prop = inputId.substring(5).toLowerCase();
+      const updatedFirstItem = firstItem;
+      updatedFirstItem[prop] = event.target.value;
+      setFirstItem(updatedFirstItem);
+    } else {
+      let prop = inputId.substring(6).toLowerCase();
+      const updatedSecondItem = secondItem;
+      secondItem[prop] = event.target.value;
+      setSecondItem(updatedSecondItem);
+    }
+  };
+
   const compareItems = () => {
-    console.log("compareItems");
-    setFirstItem({
-      name: document.getElementById("firstName").value,
-      price: document.getElementById("firstPrice").value,
-      amount: document.getElementById("firstAmount").value,
-      unit: document.getElementById("firstUnit").value,
-    });
-    console.log("firstItem", firstItem);
-    setSecondItem({
-      name: document.getElementById("secondName").value,
-      price: document.getElementById("secondPrice").value,
-      amount: document.getElementById("secondAmount").value,
-      unit: document.getElementById("secondUnit").value,
-    });
-    console.log("secondItem", secondItem);
+    setFirstResult();
+    setSecondResult();
     computeResult();
   };
+
   const computeResult = () => {
-    console.log("computeResult");
-    setFirstResult({
-      name: firstItem.name,
-      price: firstItem.price / firstItem.amount,
-      unit: firstItem.unit,
-    });
-    console.log("firstResult", firstResult);
-    setSecondResult({
-      name: secondItem.name,
-      price: secondItem.price / secondItem.amount,
-      unit: secondItem.unit,
-    });
-    console.log("secondResult", secondResult);
-    setResult(`
-    ${firstResult.name} costs ${firstResult.price}/${firstResult.unit}\n
-    ${secondResult.name} costs ${secondResult.price}/${secondResult.unit}`);
+    let resultString =
+      firstResult.price < secondResult.price
+        ? `
+    ${firstResult.name} is more cost-effective.
+    ${firstResult.name} costs ${firstResult.price}/${firstResult.unit}
+    ${secondResult.name} costs ${secondResult.price}/${secondResult.unit}`
+        : `
+    ${secondResult.name} is more cost-effective.
+    ${secondResult.name} costs ${secondResult.price}/${secondResult.unit}
+    ${firstResult.name} costs ${firstResult.price}/${firstResult.unit}`;
+    setResult(resultString);
     console.log("result", result);
   };
 
@@ -68,51 +77,18 @@ function App() {
     <>
       <h1>Shopping Tool</h1>
       <div>
-        <h2>Item One</h2>
-        <div>
-          <label for="firstName">Name</label>
-          <input id="firstName" />
-        </div>
-        <div>
-          <label for="firstPrice">Price</label>
-          <input id="firstPrice" />
-        </div>
-        <div>
-          <label for="firstAmount">Amount</label>
-          <input id="firstAmount" />
-        </div>
-        <div>
-          <label for="firstUnit">Unit</label>
-          <input id="firstUnit" />
-        </div>
-        <h2>Item Two</h2>
-        <div>
-          <label for="secondName">Name</label>
-          <input id="secondName" />
-        </div>
-        <div>
-          <label for="secondPrice">Price</label>
-          <input id="secondPrice" />
-        </div>
-        <div>
-          <label for="secondAmount">Amount</label>
-          <input id="secondAmount" />
-        </div>
-        <div>
-          <label for="secondUnit">Unit</label>
-          <input id="secondUnit" />
-        </div>
+        <Item order="first" handleChange={handleChange} />
+        <Item order="second" handleChange={handleChange} />
         <button id="compare" onClick={compareItems}>
           Compute
         </button>
       </div>
       <div>
         <h2>Result</h2>
-        <h3>{result}</h3>
-        <p></p>
+        <p>{result}</p>
       </div>
     </>
   );
-}
+};
 
 export default App;
