@@ -1,6 +1,12 @@
 import "./App.css";
+import Instructions from "./components/Instructions";
 import Item from "./components/Item";
 import Result from "./components/Result";
+import {
+  alignItems,
+  compareItems,
+  validateComparison,
+} from "./apis/Comparison";
 import { React, useState } from "react";
 
 const App = () => {
@@ -16,31 +22,12 @@ const App = () => {
     amount: 0,
     unit: "",
   });
-  const firstResult = {
-    name: "",
-    price: 0,
-    unit: "",
-  };
-  const secondResult = {
-    name: "",
-    price: 0,
-    unit: "",
-  };
-  const setFirstResult = () => {
-    firstResult["name"] = firstItem.name;
-    firstResult["price"] = firstItem.price / firstItem.amount;
-    firstResult["unit"] = firstItem.unit;
-  };
-  const setSecondResult = () => {
-    secondResult["name"] = secondItem.name;
-    secondResult["price"] = secondItem.price / secondItem.amount;
-    secondResult["unit"] = secondItem.unit;
-  };
   const [result, setResult] = useState({
     costEffective: "",
     better: {},
     worse: {},
   });
+  const [comparisonValidity, setComparisonValidity] = useState(true);
 
   const handleChange = (event) => {
     let inputId = event.target.id;
@@ -57,39 +44,47 @@ const App = () => {
     }
   };
 
-  const compareItems = () => {
-    setFirstResult();
-    setSecondResult();
-    computeResult();
+  const compare = (event) => {
+    event.preventDefault();
+    const comparisonIsValid = validateComparison(firstItem, secondItem);
+    if (comparisonIsValid) {
+      const alignedItems = alignItems(firstItem, secondItem);
+      computeResult(alignedItems);
+    } else {
+      setComparisonValidity(false);
+    }
   };
 
-  const computeResult = () => {
-    let computedResult =
-      firstResult.price < secondResult.price
+  const computeResult = (items) => {
+    setComparisonValidity(true);
+    const comparisonResult = compareItems(items);
+    const first = items[0];
+    const second = items[1];
+    const computedResult =
+      comparisonResult === 1
         ? {
-            costEffective: firstResult.name,
-            better: firstResult,
-            worse: secondResult,
+            costEffective: first.name,
+            better: first,
+            worse: second,
           }
         : {
-            costEffective: secondResult.name,
-            better: secondResult,
-            worse: firstResult,
+            costEffective: second.name,
+            better: second,
+            worse: first,
           };
     setResult(computedResult);
   };
 
   return (
     <>
-      <h1>Shopping Tool</h1>
-      <div>
+      <h1>Shopping Comparison Tool</h1>
+      <Instructions />
+      <form onSubmit={compare}>
         <Item order="first" handleChange={handleChange} />
         <Item order="second" handleChange={handleChange} />
-        <button id="compare" onClick={compareItems}>
-          Compute
-        </button>
-      </div>
-      <Result result={result} />
+        <button type="submit">Compute</button>
+      </form>
+      <Result result={result} valid={comparisonValidity} />
     </>
   );
 };

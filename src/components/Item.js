@@ -8,7 +8,7 @@ const Item = ({ order, handleChange }) => {
     <table>
       <thead>
         <tr>
-          <th>Item One</th>
+          <th colspan="2">{capitalize(order)} Item</th>
         </tr>
       </thead>
       <tbody>
@@ -20,9 +20,15 @@ const Item = ({ order, handleChange }) => {
             handleChange={handleChange}
           />
         ))}
+        <br />
       </tbody>
     </table>
   );
+};
+
+const capitalize = (word) => {
+  const capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
+  return capitalizedWord;
 };
 
 export default Item;
