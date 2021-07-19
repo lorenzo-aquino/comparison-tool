@@ -1,26 +1,68 @@
 const massMeasurements = [
-  { name: "Gram", multiplier: 1, units: ["gram", "g", "gm"] },
-  { name: "Milligram", multiplier: 0.001, units: ["milligram", "mg"] },
+  {
+    name: "Gram",
+    multiplier: 1,
+    units: ["gram", "g", "gm", "grams", "gs", "gms"],
+  },
+  {
+    name: "Milligram",
+    multiplier: 0.001,
+    units: ["milligram", "mg", "milligrams", "mgs"],
+  },
   {
     name: "Microgram",
     multiplier: 0.000001,
-    units: ["microgram", "mcg", "μg"],
+    units: ["microgram", "mcg", "μg", "micrograms", "mcgs", "μgs"],
   },
-  { name: "Kilogram", multiplier: 1000, units: ["kilogram", "kg"] },
-  { name: "Ounce", multiplier: 28.3495, units: ["ounce", "oz"] },
-  { name: "Pound", multiplier: 453.592, units: ["pound", "lb"] },
+  {
+    name: "Kilogram",
+    multiplier: 1000,
+    units: ["kilogram", "kg", "kilograms", "kgs"],
+  },
+  {
+    name: "Ounce",
+    multiplier: 28.3495,
+    units: ["ounce", "oz", "ounces", "ozs"],
+  },
+  {
+    name: "Pound",
+    multiplier: 453.592,
+    units: ["pound", "lb", "pounds", "lbs"],
+  },
 ];
 const volumeMeasurements = [
-  { name: "Milliliter", multiplier: 1, units: ["milliliter", "ml"] },
-  { name: "Liter", multiplier: 1000, units: ["liter", "l"] },
+  {
+    name: "Milliliter",
+    multiplier: 1,
+    units: ["milliliter", "ml", "milliliters", "mls"],
+  },
+  { name: "Liter", multiplier: 1000, units: ["liter", "l", "liters", "ls"] },
   {
     name: "Fluid Ounce",
     multiplier: 29.57,
-    units: ["fluid ounce", "oz", "fl oz", "fl. oz", "fl.oz"],
+    units: [
+      "fluid ounce",
+      "oz",
+      "fl oz",
+      "fl. oz",
+      "fl.oz",
+      "ozs",
+      "fl ozs",
+      "fl. ozs",
+      "fl.ozs",
+    ],
   },
-  { name: "Pint", multiplier: 473.176, units: ["pint", "pt"] },
-  { name: "Quart", multiplier: 946.353, units: ["quart", "qt"] },
-  { name: "Gallon", multiplier: 3785.41, units: ["gallon", "gal"] },
+  { name: "Pint", multiplier: 473.176, units: ["pint", "pt", "pints", "pts"] },
+  {
+    name: "Quart",
+    multiplier: 946.353,
+    units: ["quart", "qt", "quarts", "qts"],
+  },
+  {
+    name: "Gallon",
+    multiplier: 3785.41,
+    units: ["gallon", "gal", "gallons", "gals"],
+  },
 ];
 
 const validateUnits = (firstUnit, secondUnit) => {
