@@ -16,7 +16,7 @@ const volumeMeasurements = [
   {
     name: "Fluid Ounce",
     multiplier: 29.57,
-    units: ["fluid ounce", "fl oz", "fl. oz", "fl.oz"],
+    units: ["fluid ounce", "oz", "fl oz", "fl. oz", "fl.oz"],
   },
   { name: "Pint", multiplier: 473.176, units: ["pint", "pt"] },
   { name: "Quart", multiplier: 946.353, units: ["quart", "qt"] },
