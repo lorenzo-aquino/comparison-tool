@@ -1,4 +1,5 @@
 import "./App.css";
+import Footer from "./components/Footer";
 import Instructions from "./components/Instructions";
 import Item from "./components/Item";
 import Result from "./components/Result";
@@ -85,6 +86,7 @@ const App = () => {
         <button type="submit">Compute</button>
       </form>
       <Result result={result} valid={comparisonValidity} />
+      <Footer />
     </>
   );
 };
