@@ -1,28 +1,22 @@
 import React from "react";
-import Field from "./Field";
+import { TextField, Box } from "@material-ui/core";
 
 const Item = ({ order, handleChange }) => {
   const fields = ["Name", "Price", "Amount", "Unit"];
   const itemFields = fields.map((field) => order + field);
   return (
-    <table>
-      <thead>
-        <tr>
-          <th colspan="2">{capitalize(order)} Item</th>
-        </tr>
-      </thead>
-      <tbody>
-        {fields.map((field, index) => (
-          <Field
-            key={itemFields[index]}
-            id={itemFields[index]}
-            label={field}
-            handleChange={handleChange}
-          />
-        ))}
-        <br />
-      </tbody>
-    </table>
+    <Box className="flex-parent after-space">
+      <h3>{capitalize(order)} Item</h3>
+      {fields.map((field, index) => (
+        <TextField
+          key={itemFields[index]}
+          label={field}
+          id="standard-basic"
+          name={itemFields[index]}
+          onChange={handleChange}
+        />
+      ))}
+    </Box>
   );
 };
 

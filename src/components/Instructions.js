@@ -1,11 +1,11 @@
 import React from "react";
+import { List, CardContent } from "@material-ui/core";
 
 const Instructions = () => (
   <>
-    <h3>Instructions</h3>
-    <p>
-      Use this tool to compare which of two items is more cost-effective
-      <ul>
+    <CardContent>
+      <List>
+        <h3>Instructions</h3>
         <li>
           Fill in the name, price, amount, and unit of measurement of the two
           items you wish to compare.
@@ -15,8 +15,8 @@ const Instructions = () => (
           This tool supports the comparison of different units (e.g. 16 fl.oz vs
           500 ml, 5lbs vs 2kg)
         </li>
-      </ul>
-    </p>
+      </List>
+    </CardContent>
   </>
 );
 

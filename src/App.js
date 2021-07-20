@@ -1,5 +1,8 @@
 import "./App.css";
+import { React, useState } from "react";
+import { Container, CssBaseline } from "@material-ui/core";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 import Instructions from "./components/Instructions";
 import Item from "./components/Item";
 import Result from "./components/Result";
@@ -8,7 +11,7 @@ import {
   compareItems,
   validateComparison,
 } from "./apis/Comparison";
-import { React, useState } from "react";
+import Button from "@material-ui/core/Button";
 
 const App = () => {
   const [firstItem, setFirstItem] = useState({
@@ -31,15 +34,15 @@ const App = () => {
   const [comparisonValidity, setComparisonValidity] = useState(true);
 
   const handleChange = (event) => {
-    let inputId = event.target.id;
+    console.log(event.target);
+    let inputId = event.target.name;
     if (inputId.startsWith("first")) {
       let prop = inputId.substring(5).toLowerCase();
-      const updatedFirstItem = firstItem;
-      updatedFirstItem[prop] = event.target.value;
+      const updatedFirstItem = { ...firstItem, [prop]: event.target.value };
       setFirstItem(updatedFirstItem);
     } else {
       let prop = inputId.substring(6).toLowerCase();
-      const updatedSecondItem = secondItem;
+      const updatedSecondItem = { ...secondItem, [prop]: event.target.value };
       secondItem[prop] = event.target.value;
       setSecondItem(updatedSecondItem);
     }
@@ -78,14 +81,21 @@ const App = () => {
 
   return (
     <>
-      <h1>Shopping Comparison Tool</h1>
-      <Instructions />
-      <form onSubmit={compare}>
-        <Item order="first" handleChange={handleChange} />
-        <Item order="second" handleChange={handleChange} />
-        <button type="submit">Compute</button>
-      </form>
-      <Result result={result} valid={comparisonValidity} />
+      <CssBaseline />
+      <Header />
+      <Container id="main">
+        <Instructions />
+        <Container>
+          <form onSubmit={compare}>
+            <Item order="first" handleChange={handleChange} />
+            <Item order="second" handleChange={handleChange} />
+            <Button variant="contained" color="secondary" type="submit">
+              Compute
+            </Button>
+          </form>
+        </Container>
+        <Result result={result} valid={comparisonValidity} />
+      </Container>
       <Footer />
     </>
   );

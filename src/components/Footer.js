@@ -1,14 +1,21 @@
 import React from "react";
+import { Container, Link } from "@material-ui/core";
 
 const Footer = () => (
-  <footer>
+  <Container className="MuiPaper-elevation4 footer">
     <p>
-      by <a href="https://lorenzo-aquino.github.io">Lorenzo Aquino</a>
+      <span>created by </span>
+      <Link color="textPrimary" href="https://lorenzo-aquino.github.io">
+        Lorenzo Aquino
+      </Link>
     </p>
     <p>
-      Created my free logo at <a href="https://logomakr.com">LogoMakr.com</a>
+      <span>Created my free logo at </span>
+      <Link color="textPrimary" href="https://logomakr.com">
+        LogoMakr.com
+      </Link>
     </p>
-  </footer>
+  </Container>
 );
 
 export default Footer;
